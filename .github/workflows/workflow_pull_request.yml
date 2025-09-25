@@ -38,11 +38,11 @@ jobs:
           echo "Starting fake tests..."
           sleep 300
           echo "Fake tests complete"
-          
-jobs:
+
   workflow_complete:
-    name: end of workflow
+    name: End of workflow
     runs-on: ubuntu-latest
+    needs: fake_tests
     steps:
       - name: Completion message
         run: echo "Workflow Complete"
