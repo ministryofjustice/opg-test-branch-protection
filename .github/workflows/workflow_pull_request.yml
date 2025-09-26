@@ -26,9 +26,23 @@ permissions:
   statuses: none
 
 jobs:
-  workflow_complete:
-    name: end of workflow
+  fake_tests:
+    name: Run fake tests
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Simulate tests
+        run: |
+          echo "Starting fake tests..."
+          sleep 300
+          echo "Fake tests complete"
+
+  workflow_complete:
+    name: End of workflow
+    runs-on: ubuntu-latest
+    needs: fake_tests
     steps:
       - name: Completion message
         run: echo "Workflow Complete"
