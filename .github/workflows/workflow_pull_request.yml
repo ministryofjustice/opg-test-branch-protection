@@ -35,11 +35,18 @@ jobs:
 
       - name: Simulate tests
         run: ./example_file/testing_script.sh
-        
+
   workflow_complete:
     name: End of workflow
     runs-on: ubuntu-latest
+    if: always()
     needs: fake_tests
     steps:
+      - name: Fail if tests failed
+        run: |
+          if [ "${{ needs.fake_tests.result }}" != "success" ]; then
+            echo "Fake tests failed, marking workflow as failed"
+            exit 1
+          fi
       - name: Completion message
         run: echo "Workflow Complete"
